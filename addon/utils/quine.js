@@ -1,8 +1,8 @@
-export function cloneHead() {
+export function cloneHead(document = window.document) {
   return document.head.innerHTML;
 }
 
-export function cloneBody() {
+export function cloneBody(document = window.document) {
   let content = '';
   for (let node of document.body.children) {
     if (!node.classList.contains('ember-view')) {
@@ -25,7 +25,7 @@ export function buildHtml(headContent, bodyContent) {
   ].join('\n');
 }
 
-export function saveHtmlFile(fileName, htmlContent) {
+export function saveHtmlFile(fileName, htmlContent, document = window.document) {
   let link = document.createElement('a');
   if (typeof(Blob) !== undefined) {
     let blob = new Blob([htmlContent], { type: 'text/html' });
@@ -39,7 +39,7 @@ export function saveHtmlFile(fileName, htmlContent) {
   document.body.removeChild(link);
 }
 
-export function saveQuine(fileName) {
-  let htmlContent = buildHtml(cloneHead(), cloneBody());
-  return saveHtmlFile(fileName, htmlContent);
+export function saveQuine(fileName, document = window.document) {
+  let htmlContent = buildHtml(cloneHead(document), cloneBody(document));
+  return saveHtmlFile(fileName, htmlContent, document);
 }
