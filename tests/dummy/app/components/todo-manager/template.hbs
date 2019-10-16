@@ -1,0 +1,16 @@
+{{yield (hash
+  allTodos=this.allTodos
+  activeTodos=this.activeTodos
+  completedTodos=this.completedTodos
+  todos=this.filteredTodos
+  todosLeft=this.itemsLeft
+  canClearAll=this.hasCompletedItems
+  add=(action "addTodo")
+  remove=(action "removeTodo")
+  updateLabel=(action "updateTodoLabel")
+  setCompleted=(action "setTodoCompleted")
+  toggleCompleted=(action "toggleCompleted")
+  clearAllCompleted=(action "clearAllCompleted")
+  startEditing=(action "setEditing" true)
+  stopEditing=(action "setEditing" false)
+)}}

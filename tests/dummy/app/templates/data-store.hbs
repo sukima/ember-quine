@@ -1,0 +1,84 @@
+{{#if this.storeError}}
+  <div class="alert alert_danger">
+    <div class="alert--content">
+      {{this.storeError}}
+    </div>
+  </div>
+{{/if}}
+
+<h2>Data Storage</h2>
+
+<p>
+  A quine on its own is not much use without it saving some state. With
+  Ember Quine it is assumed you will need to save not just the application
+  assets but any data produced by interacting with the app.
+</p>
+
+<p>
+  On this page you can experiment in real time with the underlying data storage
+  mechinism. Note how each div has a unique ID and the content is URI Encoded
+  JSON. Note that the storage area is created as needed to house the data divs.
+</p>
+
+<p>
+  You can see the DOM in the Dev Tools Inspector to further investigate. Though
+  changing the HTML itself will not update the app to reflect the change but you
+  could <em>save</em> and reload to see it.
+  <small>
+    Best to let the app handle it though
+  </small>.
+</p>
+
+<h3>Current storage</h3>
+
+<DocumentStoreManager as |manager|>
+
+  <form {{action "addOrUpdateStore" manager.save on="submit"}}>
+    <fieldset>
+      <label for="store-id">Store ID</label>
+      <Input id="store-id" @value={{this.tempStoreId}} required="required" />
+    </fieldset>
+    <fieldset>
+      <label for="store-data">Store Data</label>
+      <Input id="store-data" @value={{this.tempStoreData}} />
+    </fieldset>
+    <button type="submit">Add/Update</button>
+  </form>
+
+  <h4>Raw HTML</h4>
+
+  {{#if manager.storeHTML}}
+    <pre><code>{{manager.storeHTML}}</code></pre>
+  {{else}}
+    <p>
+      No DOM storage area created yet.
+      Try <LinkTo @route="todos">adding some todos</LinkTo>.
+    </p>
+  {{/if}}
+
+  <h4>Storage</h4>
+
+  <ul class="storage-list">
+    {{#each manager.storeNodes as |node|}}
+      <li class="storage-node">
+        <strong>{{node.id}}</strong>
+        {{#if node.canDestroy}}
+          <button
+            class="btn-icon"
+            title="remove entry"
+            {{action manager.destroy node.id}}
+          >
+            &times;
+          </button>
+        {{/if}}
+        <pre><code>{{node.json}}</code></pre>
+      </li>
+    {{else}}
+      <li>
+        No storage nodes created yet.
+        Try <LinkTo @route="todos">adding some todos</LinkTo>.
+      </li>
+    {{/each}}
+  </ul>
+
+</DocumentStoreManager>

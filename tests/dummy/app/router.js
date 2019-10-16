@@ -7,6 +7,10 @@ const Router = EmberRouter.extend({
 });
 
 Router.map(function() {
+  this.route('about', { path: '/' });
+  this.route('todos');
+  this.route('data-store');
+  this.route('docs');
 });
 
 export default Router;

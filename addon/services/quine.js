@@ -29,17 +29,20 @@ export default Service.extend(Evented, {
     saveStore(storeName, data, this.document);
     this.set('isDirty', true);
     this.trigger('didSaveStore', { storeName });
+    this.trigger('didChange');
   },
 
   destroyStore(storeName) {
     destroyStore(storeName, this.document);
     this.set('isDirty', true);
     this.trigger('didDestroyStore', { storeName });
+    this.trigger('didChange');
   },
 
   destroyAllStores() {
     destroyAllStores(this.document);
     this.set('isDirty', true);
     this.trigger('didDestroyAllStores');
+    this.trigger('didChange');
   }
 });

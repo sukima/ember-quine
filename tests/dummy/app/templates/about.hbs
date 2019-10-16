@@ -1,0 +1,98 @@
+<h2 id="title"><term>Ember Quine</term> - An Ember Addon</h2>
+
+<figure>
+  <blockquote cite="https://en.wikipedia.org/wiki/Quine_(computing)">
+    <p>
+      A quine is a computer program which takes no input and produces a copy of
+      its own source code as its only output.
+    </p>
+  </blockquote>
+  <figcaption>
+    <cite>
+      <a href="https://en.wikipedia.org/wiki/Quine_(computing)">
+        Quine (computing) - Wikipedia
+      </a>
+    </cite>
+  </figcaption>
+</figure>
+
+<p>
+  Ember Quine is an <a href="https://emberjs.com">Ember</a> addon that enables
+  an Ember app to be self downloaded as a single HTML file that runs offline
+  (via the <code>file://</code> URI).
+</p>
+
+<p>
+  To use this addon jump to the <LinkTo @route="docs">documentation</LinkTo>
+  section.
+</p>
+
+<h3>Demo</h3>
+
+<p>
+  This application is a quine. It means you can download an offline fully
+  working copy by clicking this button:
+  <DownloadButton>Download Copy</DownloadButton>
+</p>
+
+<p>
+  This will save an HTML file to your Downloads folder which you can open in
+  another tab. Try it and you will have a fully working exact copy of what you
+  see here in the new tab; CSS and JS included!
+</p>
+
+<p>
+  This addon is split into three key pieces:
+  <ol>
+    <li>Bundling the entire Ember app assets into one HTML file</li>
+    <li>Provide a method of data storage that writes to the HTML DOM</li>
+    <li>Provide a method to download the current DOM into a stand alone HTML
+      file</li>
+  </ol>
+</p>
+
+<p>
+  You can experiment with the app with de facto standard of
+  <LinkTo @route="todos">TodoMVC</LinkTo>. Or visualize the Underlying
+  <LinkTo @route="data-store">DOM storage</LinkTo>.
+</p>
+
+<h3>Why would you use this?</h3>
+
+<p>
+  If the idea of being able to carry a fully fledged Ember app in one self
+  running/saving HTML file on a thumb drive or static web hosting fancies you.
+</p>
+
+<p>
+  An example might be this addon where you manage todos and save when done.
+  Replacing the master version on disk each time. Maybe that todo list sits on
+  Dropbox or in a secret encrypted USB thumb drive.
+</p>
+
+<p>
+  Or an interactive app for visualizing data that can be shared over FTP,
+  Bitorrent, Tor, <a
+  href="https://en.wikipedia.org/wiki/Sneakernet">Sneakernet</a>, etc.
+</p>
+
+<p>
+  Another example of a use case could be the following situation. A company has
+  a large scale Ember app which has a component to visualize some data they can
+  store on physical media. The customer would like to have a downloadable file
+  of that data. To offer a fleshed out interactive visualization of that data
+  in a single file an Ember Quine app is used to house the one component and
+  the static data is baked into the downloaded output.
+</p>
+
+<p>
+  Maybe a WebGL viewer of a 3D model. In non quine versions the 3D model data
+  (maybe JSON) would be saved and some viewer would need to be constructed and
+  installed. But with a Quine the Ember app inside can view the 3d data and
+  provide interactivity all in one HTML file that can be saved offline.
+</p>
+
+<p>
+  After understanding the power of this concept what ideas can you come up
+  with?
+</p>

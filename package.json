@@ -18,7 +18,8 @@
     "lint:js": "eslint .",
     "start": "ember serve",
     "test": "ember test",
-    "test:all": "ember try:each"
+    "test:all": "ember try:each",
+    "deploy": "yarn build --prod && ./deploy.sh -c ./config/deploy-prep-config.bash"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
@@ -48,7 +49,9 @@
     "eslint-plugin-ember": "^7.1.0",
     "eslint-plugin-node": "^10.0.0",
     "loader.js": "^4.7.0",
-    "qunit-dom": "^0.9.0"
+    "qunit-dom": "^0.9.0",
+    "todomvc-app-css": "^2.3.0",
+    "todomvc-common": "^1.0.5"
   },
   "engines": {
     "node": "8.* || >= 10.*"

@@ -1,3 +1,23 @@
-<h2 id="title">Welcome to Ember</h2>
+<div class="container">
+
+  <MainNav />
+
+  {{#if this.showUnsavedAlert}}
+    <div class="alert alert_warning">
+      <div class="alert--content">
+        Changes are not saved automatically. You must press the <em>save</em>
+        button and download a copy of this app to save the current changes.
+      </div>
+      <button
+        class="alert--close"
+        title="close alert"
+        {{action "closeUnsavedAlert"}}
+      >
+        &times;
+      </button>
+    </div>
+  {{/if}}
+
+</div>
 
 {{outlet}}

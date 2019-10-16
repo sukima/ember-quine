@@ -1,0 +1,7 @@
+<button
+  ...attributes
+  class={{if this.quine.isDirty "warn"}}
+  {{action "download" @filename}}
+>
+  {{yield}}
+</button>
