@@ -74,7 +74,7 @@ module.exports = {
     return this._super.included.call(this, ...arguments);
   },
 
-  outputReady({ directory }) {
+  postBuild({ directory }) {
     let indexFilePath = path.join(directory, 'index.html');
     let doc = cheerio.load(fs.readFileSync(indexFilePath, 'utf-8'));
     doc('style[data-asset-path]').each(inlineReplace(
