@@ -85,7 +85,7 @@ module.exports = {
       ScriptInliner,
       (node) => ({ assetPath: node.attr('data-asset-path'), directory })
     ));
-    doc('link[rel=stylesheet]').each(inlineReplace(
+    doc('link[href]').each(inlineReplace(
       StyleInliner,
       (node) => ({ assetPath: node.attr('href'), directory })
     ));
