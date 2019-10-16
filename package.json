@@ -1,13 +1,13 @@
 {
   "name": "ember-quine",
-  "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "version": "0.0.1",
+  "description": "Ember addon to build apps as self contained HTML files",
   "keywords": [
     "ember-addon"
   ],
-  "repository": "",
+  "repository": "https://github.com/sukima/ember-quine.git",
   "license": "MIT",
-  "author": "",
+  "author": "Devin Weaver (@sukima) <suki@tritarget.org>",
   "directories": {
     "doc": "doc",
     "test": "tests"
