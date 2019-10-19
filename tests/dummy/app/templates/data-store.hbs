@@ -1,9 +1,7 @@
 {{#if this.storeError}}
-  <div class="alert alert_danger">
-    <div class="alert--content">
-      {{this.storeError}}
-    </div>
-  </div>
+  <AlertBox class="alert_danger">
+    {{this.storeError}}
+  </AlertBox>
 {{/if}}
 
 <h2>Data Storage</h2>
@@ -23,17 +21,18 @@
 <p>
   You can see the DOM in the Dev Tools Inspector to further investigate. Though
   changing the HTML itself will not update the app to reflect the change but you
-  could <em>save</em> and reload to see it.
-  <small>
-    Best to let the app handle it though
-  </small>.
+  could <em>save</em> and reload to see it. Best to let the app handle it
+  though.
 </p>
 
 <h3>Current storage</h3>
 
 <DocumentStoreManager as |manager|>
 
-  <form {{action "addOrUpdateStore" manager.save on="submit"}}>
+  <form
+    class="data-form"
+    {{action "addOrUpdateStore" manager.save on="submit"}}
+  >
     <fieldset>
       <label for="store-id">Store ID</label>
       <Input id="store-id" @value={{this.tempStoreId}} required="required" />
@@ -48,7 +47,7 @@
   <h4>Raw HTML</h4>
 
   {{#if manager.storeHTML}}
-    <pre><code>{{manager.storeHTML}}</code></pre>
+    <CodeBlock @code={{manager.storeHTML}} @language="html" />
   {{else}}
     <p>
       No DOM storage area created yet.
@@ -71,7 +70,7 @@
             &times;
           </button>
         {{/if}}
-        <pre><code>{{node.json}}</code></pre>
+        <CodeBlock @code={{node.json}} @language="json" />
       </li>
     {{else}}
       <li>

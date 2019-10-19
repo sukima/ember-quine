@@ -5,6 +5,21 @@ const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 module.exports = function(defaults) {
   let app = new EmberAddon(defaults, {
     // Add options here
+    'ember-code-snippet': {
+      snippetPaths: ['tests/dummy/app'],
+    },
+
+    'ember-prism': {
+      theme: 'coy',
+      components: [
+        'handlebars',
+        'javascript',
+        'json',
+        'markup',
+        'markup-templating'
+      ],
+      plugins: [],
+    }
   });
 
   /*

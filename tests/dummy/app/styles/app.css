@@ -1,3 +1,9 @@
+.site-footer {
+  border-top: 1px solid #e7e7e7;
+  display: flex;
+  justify-content: space-between;
+}
+
 .container {
   max-width: 550px;
 }
@@ -115,4 +121,15 @@ nav.bar li button.warn {
 .btn-icon {
   color: red;
   font-size: 1.3rem;
+}
+
+.data-form label {
+  float: left;
+  text-align: right;
+  margin-right: 15px;
+  width: 100px;
+}
+
+.data-form fieldset {
+  border: none;
 }

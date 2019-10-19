@@ -1,0 +1,10 @@
+<div class="alert" ...attributes>
+  <div class="alert--content">
+    {{yield}}
+  </div>
+  {{#if @onClose}}
+    <button class="alert--close" title="close alert" {{action @onClose}}>
+      &times;
+    </button>
+  {{/if}}
+</div>
