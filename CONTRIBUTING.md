@@ -2,7 +2,7 @@
 
 ## Installation
 
-* `git clone <repository-url>`
+* `git clone https://github.com/sukima/ember-quine.git`
 * `cd ember-quine`
 * `yarn install`
 
