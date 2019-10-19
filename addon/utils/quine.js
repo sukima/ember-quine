@@ -14,6 +14,7 @@ export function cloneBody(document = window.document) {
 
 export function buildHtml(headContent, bodyContent) {
   return [
+    '<!DOCTYPE html>',
     '<html>',
     '<head>',
     headContent,

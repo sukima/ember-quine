@@ -1,5 +1,6 @@
 import Service from '@ember/service';
 import Evented from '@ember/object/evented';
+import { getOwner } from '@ember/application';
 import { assert } from '@ember/debug';
 import { saveQuine } from '../utils/quine';
 import {
@@ -8,6 +9,7 @@ import {
   loadStore,
   saveStore
 } from '../utils/document-store';
+import maybe from '../utils/maybe';
 
 export default Service.extend(Evented, {
   isDirty: false,
@@ -15,6 +17,13 @@ export default Service.extend(Evented, {
   document: window.document,
 
   download(filename) {
+    filename = maybe(filename)
+      .nothing(() => {
+        let env = getOwner(this).resolveRegistration('config:environment');
+        return maybe(env).prop('APP.name');
+      })
+      .bind(name => name.endsWith('.html') ? name : `${name}.html`)
+      .value();
     assert('Must provide a filename to download quine', filename);
     saveQuine(filename, this.document);
     this.set('isDirty', false);
