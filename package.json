@@ -1,6 +1,6 @@
 {
   "name": "ember-quine",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Ember addon to build apps as self contained HTML files",
   "keywords": [
     "ember-addon"
