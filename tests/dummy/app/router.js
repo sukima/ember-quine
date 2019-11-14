@@ -10,7 +10,9 @@ Router.map(function() {
   this.route('about', { path: '/' });
   this.route('todos');
   this.route('data-store');
-  this.route('docs');
+  this.route('docs', function() {
+    this.route('details');
+  });
 });
 
 export default Router;
