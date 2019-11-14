@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
+    "common-tags": "^1.8.0",
     "ember-cli-babel": "^7.11.1",
     "ember-cli-htmlbars": "^4.0.0"
   },
