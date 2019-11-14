@@ -2,6 +2,16 @@ import maybe from './maybe';
 
 export const DOCUMENT_STORE_AREA_ID = 'document-store-area';
 
+export function encodeStoreData(storeData) {
+  return maybe(storeData)
+    .bind(data => encodeURIComponent(JSON.stringify(data)));
+}
+
+export function decodeStoreData(textData) {
+  return maybe(textData)
+    .bind(data => JSON.parse(decodeURIComponent(data)));
+}
+
 export function createStoreArea(document = window.document) {
   let storeArea = document.createElement('div');
   storeArea.id = DOCUMENT_STORE_AREA_ID;
@@ -25,7 +35,7 @@ export function loadStore(storeName, document = window.document) {
   return maybe(getStoreArea(document))
     .bind(() => document.getElementById(storeName))
     .prop('innerHTML')
-    .bind(data => JSON.parse(decodeURIComponent(data)))
+    .bind(decodeStoreData)
     .value();
 }
 
@@ -36,7 +46,7 @@ export function saveStore(storeName, data, document = window.document) {
   let store = maybe(document.getElementById(storeName))
     .nothing(() => createStore(storeName, storeArea, document))
     .value();
-  store.innerHTML = encodeURIComponent(JSON.stringify(data));
+  store.innerHTML = encodeStoreData(data).value('');
   return store;
 }
 
@@ -45,6 +55,18 @@ export function destroyStore(storeName, document = window.document) {
   maybe(storeArea)
     .bind(() => document.getElementById(storeName))
     .bind(store => storeArea.removeChild(store));
+}
+
+export function loadAll(document = window.document) {
+  return maybe(getStoreArea(document))
+    .bind(storeArea => [...storeArea.children])
+    .bind(nodes => nodes.map(node => [
+      node.getAttribute('id'),
+      decodeStoreData(node.innerHTML).value()
+    ]))
+    .bind(storeIterable => new Map(storeIterable))
+    .nothing(() => new Map())
+    .value();
 }
 
 export function destroyAll(document = window.document) {

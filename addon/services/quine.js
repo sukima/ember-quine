@@ -6,6 +6,7 @@ import { saveQuine } from '../utils/quine';
 import {
   destroyAllStores,
   destroyStore,
+  loadAll,
   loadStore,
   saveStore
 } from '../utils/document-store';
@@ -45,6 +46,19 @@ export default Service.extend(Evented, {
     destroyStore(storeName, this.document);
     this.set('isDirty', true);
     this.trigger('didDestroyStore', { storeName });
+    this.trigger('didChange');
+  },
+
+  exportStores() {
+    return loadAll(this.document);
+  },
+
+  importStores(storesIterable) {
+    for (let [storeName, storeData] of storesIterable) {
+      saveStore(storeName, storeData, this.document);
+    }
+    this.set('isDirty', true);
+    this.trigger('didImportStores');
     this.trigger('didChange');
   },
 
