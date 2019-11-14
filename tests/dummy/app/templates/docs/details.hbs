@@ -1,0 +1,109 @@
+<h3>Details on how this works</h3>
+
+<p>
+  This example application illustrates three key ideas.
+</p>
+
+<ol>
+  <li>
+    Running an Ember application with all the assets placed inline instead of
+    sub-resources that require a server to serve up.
+  </li>
+  <li>
+    Saving the HTML (the entire Ember application) to a local file system.
+  </li>
+  <li>
+    Using <code>&lt;iframes&gt;</code> to manage an auto upgrade feature.
+  </li>
+</ol>
+
+<h4>Inline Assets</h4>
+
+<p>
+  This addon implements a compilation step to the build pipeline that reads the
+  output of the assets and then adds them inline to
+  <CodeInline>index.html</CodeInline> output.
+</p>
+
+<p>
+  It will convert the <CodeInline>&lt;link&gt;</CodeInline> and
+  <CodeInline>&lt;&#8203;script src=&hellip;&gt;</CodeInline> <em>default</em> tags in
+  a typical ember app's
+  <CodeInline>app/index.html</CodeInline> to
+  <CodeInline>&lt;style&gt;</CodeInline> and
+  <CodeInline>&lt;&#8203;script&gt;</CodeInline> respectively.
+</p>
+
+<CodeSnippet @name="pre-compilation.html" />
+
+<p>Becomes</p>
+
+<CodeSnippet @name="post-compilation.html" />
+
+<h4>Saving to the Local File System</h4>
+
+<p>
+  Saving is accomplished by reading the DOM for <CodeInline>head</CodeInline>
+  and <CodeInline>body</CodeInline> content. Converting to valid HTML as large
+  string. Putting it into a Blob. Creating a <CodeInline>&lt;a&gt;</CodeInline>
+  tag and setting its <code>href</code> to the Blob object. And lastly sending
+  the <CodeInline>&lt;a&gt;</CodeInline> tag a <code>click</code> event.
+</p>
+
+<p>
+  This will prompt the user with a download dialog and the downloaded file will
+  be a fully working copy of the app. This is how changes to an app are
+  persisted as each save will include the data and code.
+</p>
+
+<p>
+  A concequence of running an Ember app from a <CodeInline>file://</CodeInline>
+  URL is that there is no longer a server to interpreate routing. This means
+  the <code>hash</code> routing must be used.
+</p>
+
+<p>
+  For prior art reference this concept is used as the primary mechanism for the
+  popular and useful <a href="https://tiddlywiki.com">TiddlyWiki</a>.
+</p>
+
+<h4>Auto Upgrading</h4>
+
+<p>
+  This app demonstrates a method for auto upgrading itself. This is done in two
+  steps.
+</p>
+
+<p>
+  Because this app is designed to be ran from
+  a <CodeInline>file://</CodeInline> URL it runs into CORS issues easily. Also
+  to facilitate the ability to export data from one app to another we need
+  a second instance of the app running. We do this by embedding a hidden iframe
+  that runs the cononical version of the app.
+</p>
+
+<p>
+  The first step is to embed the iframe and set the running app inside to
+  <em>upgrade mode</em>. That app uses the
+  <CodeInline>window.postMessage</CodeInline> API to send the latest version
+  number to the parent app. This allows the parent app to show an upgrade
+  notification to the user.
+</p>
+
+<p>
+  When the user chooses to upgrade a new iframe is embeded just like the
+  version checking and when it is loaded the parent app uses the same
+  <CodeInline>window.postMessage</CodeInline> API to send the iframe app the
+  current data and then asks the iframe app to <em>download</em> itself.
+</p>
+
+<p>
+  This will prompt the user to save a new version of the app with the data.
+  Loading the new saved file (or refreshing in the case of the user overwriting
+  the original) will have updated code with the previous data intact.
+</p>
+
+<p>
+  See the <a href="https://github.com/sukima/ember-quine">Source Code</a> for
+  how this is technically done.
+</p>

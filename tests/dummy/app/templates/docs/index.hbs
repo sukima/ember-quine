@@ -1,0 +1,191 @@
+<h3>Installation</h3>
+
+<p>To add this to your Ember App run the following:</p>
+
+<CodeBlock>ember install ember-quine</CodeBlock>
+
+<p>
+  Once installed the next time you build the app the
+  <CodeInline>index.html</CodeInline> will have all the CSS and JavaScript
+  assets inline the HTML.
+</p>
+
+<AlertBox class="alert_info" @hideCloseButton={{true}}>
+  <p>
+    In order for a downloaded copy of a quine app to work the location type
+    <strong>must be</strong> <CodeInline>hash</CodeInline>. Make this change in
+    your <CodeInline>config/environment.js</CodeInline>.
+    <CodeBlock @language="javascript">ENV.locationType = 'hash';</CodeBlock>
+  </p>
+</AlertBox>
+
+<h3>Quine Service</h3>
+
+<p>
+  This addon provides a <term>quine</term> service which exposes methods to
+  download the app and load/save/remove data from the document storage
+  mechanism.
+</p>
+
+<h4>Downloading the Quine App</h4>
+
+<p>
+  Use the <CodeInline>download()</CodeInline> method to have the browser
+  download a copy of the current running quine.
+</p>
+
+<CodeSnippet @name="download-button.js" />
+
+<p>
+  This works by reading the <abbr>HTML</abbr> nodes
+  (<CodeInline>head</CodeInline> and <CodeInline>body</CodeInline>) and
+  capturing their <CodeInline>innerHTML</CodeInline>. It then constructs a new
+  HTML document with string concatenation. It then builds a new
+  <CodeInline>&lt;a&gt;</CodeInline> tag with its <CodeInline>href</CodeInline>
+  set to the constructed <abbr>HTML</abbr>. It adds the tag to the document,
+  triggers a click action, and then removes the element.
+</p>
+
+<h4>quine.download(filename)</h4>
+
+<p>
+  Initiates a download of the quine. It will reset
+  <CodeInline>quine.isDirty</CodeInline> to false.
+</p>
+
+<p>
+  <strong>Triggered Events</strong>
+  <ul>
+    <li>didDownload</li>
+  </ul>
+  <strong>Params</strong>
+  <ul>
+    <li>
+      filename <CodeInline>string|undefined</CodeInline> - the filename to save
+      as. Will default to the application name. It will add an
+      <CodeInline>.html</CodeInline> extension if missing.
+    </li>
+  </ul>
+</p>
+
+<h4>Data Storage</h4>
+
+<p>
+  The data storage provided saves data to the DOM directly. See
+  <LinkTo @route="data-store">Data Store section</LinkTo> for more information.
+</p>
+
+<h4>quine.loadStore(storeName)</h4>
+
+<p>
+  Loads the data from the DOM and returns the value stored.
+</p>
+
+<p>
+  <strong>Returns</strong>: <CodeInline>any</CodeInline> - The payload stored in
+  the data store or undefined if not found
+  <br>
+  <strong>Params</strong>
+  <ul>
+    <li>
+      storeName <CodeInline>string</CodeInline> - The name of the store to load
+    </li>
+  </ul>
+</p>
+
+<h4>quine.saveStore(storeName, data)</h4>
+
+<p>
+  Saves data to the DOM. Will set <CodeInline>quine.isDirty</CodeInline> to
+  true.
+</p>
+
+<p>
+  <strong>Triggered Events</strong>
+  <ul>
+    <li>didSaveStore - passes an object with a storeName property</li>
+    <li>didChange</li>
+  </ul>
+  <strong>Params</strong>
+  <ul>
+    <li>
+      storeName <CodeInline>string</CodeInline> - The name of the store to save
+    </li>
+    <li>
+      data <CodeInline>any</CodeInline> - The payload to be saved to the data
+      store
+    </li>
+  </ul>
+</p>
+
+<h4>quine.destroyStore(storeName)</h4>
+
+<p>
+  Removes a stored set of data by storeName from the DOM. Will set
+  <CodeInline>quine.isDirty</CodeInline> to true.
+</p>
+
+<p>
+  <strong>Triggered Events</strong>
+  <ul>
+    <li>didDestroyStore - passes an object with a storeName property</li>
+    <li>didChange</li>
+  </ul>
+  <strong>Params</strong>
+  <ul>
+    <li>
+      storeName <CodeInline>string</CodeInline> - The name of the store to
+      destroy
+    </li>
+  </ul>
+</p>
+
+<h4>quine.destroyAllStores()</h4>
+
+<p>
+  Removes <em>all</em> data from the DOM.
+  <CodeInline>quine.isDirty</CodeInline> to true.
+</p>
+
+<p>
+  <strong>Triggered Events</strong>
+  <ul>
+    <li>didDestroyAllStores</li>
+    <li>didChange</li>
+  </ul>
+</p>
+
+<h4>quine.exportStores()</h4>
+
+<p>
+  Returns a JavaScript Map object with all the stores and their data.
+</p>
+
+<h4>quine.importStores(storesIterable)</h4>
+
+<p>
+  Will import each store defined in the <CodeInline>storesIterable</CodeInline>.
+  This will overwrite current stores with the new data but will not remove
+  stores not referenced in the <CodeInline>storesIterable</CodeInline>.
+  If you want to replace everything use
+  <CodeInline>destroyAllStores</CodeInline> before
+  <CodeInline>importStores</CodeInline>.
+  <CodeInline>quine.isDirty</CodeInline> to true.
+</p>
+
+<p>
+  <strong>Triggered Events</strong>
+  <ul>
+    <li>didImportStores</li>
+    <li>didChange</li>
+  </ul>
+  <strong>Params</strong>
+  <ul>
+    <li>
+      storesIterable <CodeInline>Iterable&lt;[string, any]&gt;</CodeInline> -
+      The iterable that contains storeName and storeData as arrays. Compatible
+      interfaces are the <CodeInline>Map</CodeInline> object and
+      <CodeInline>Object.entries()</CodeInline>.
+    </li>
+  </ul>
+</p>
