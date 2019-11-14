@@ -21,10 +21,13 @@ module.exports = function(environment) {
       // Here you can pass flags/options to your application instance
       // when it is created
       enableDirtyDataPopup: false,
+      forceUpgradeAvailable: false,
     }
   };
 
   if (environment === 'development') {
+    ENV.APP.deployUrl = 'http://localhost:4200';
+    ENV.APP.forceUpgradeAvailable = true;
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
     // ENV.APP.LOG_TRANSITIONS = true;
@@ -43,11 +46,15 @@ module.exports = function(environment) {
     ENV.APP.rootElement = '#ember-testing';
     ENV.APP.autoboot = false;
     ENV.APP.enableDirtyDataPopup = false;
+    ENV.APP.forceUpgradeAvailable = false;
+    ENV.APP.deployUrl = null;
   }
 
   if (environment === 'production') {
     // here you can enable a production-specific feature
     ENV.APP.enableDirtyDataPopup = true;
+    ENV.APP.forceUpgradeAvailable = true;
+    ENV.APP.deployUrl = 'https://sukima.github.io/ember-quine';
   }
 
   return ENV;

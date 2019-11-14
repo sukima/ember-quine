@@ -2,11 +2,21 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { STORE_NAME as TODOS_STORE_ID } from '../../services/todo-store';
-import { getStoreArea, loadStore } from 'ember-quine';
+import { STORE_NAME as SETTINGS_STORE_ID } from '../../services/settings-store';
+import { getStoreArea, loadAll } from 'ember-quine';
+
+const RESTRICTED_STORE_IDS = Object.freeze([
+  TODOS_STORE_ID,
+  SETTINGS_STORE_ID
+]);
+
+function isRestricted(id) {
+  return RESTRICTED_STORE_IDS.includes(id);
+}
 
 function guardReadOnlyStore(id) {
-  if (id !== TODOS_STORE_ID) { return; }
-  let error = new Error(`${TODOS_STORE_ID} is a readonly store`);
+  if (!isRestricted(id)) { return; }
+  let error = new Error(`${id} is a readonly store`);
   error.code = 'EREADONLY';
   throw error;
 }
@@ -34,11 +44,9 @@ export default Component.extend({
 
   storeNodes: computed('storeAreaNode', function() {
     if (!this.storeAreaNode) { return; }
-    return [...this.storeAreaNode.children].map(node => {
-      let id = node.id;
-      let data = loadStore(id, this.document);
+    return [...loadAll(this.document)].map(([id, data]) => {
       let json = JSON.stringify(data, null, 2);
-      let canDestroy = id !== TODOS_STORE_ID;
+      let canDestroy = !isRestricted(id);
       return { id, data, json, canDestroy };
     });
   }),

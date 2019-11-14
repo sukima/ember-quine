@@ -1,3 +1,5 @@
+const DOWNLOAD_ASYNC_DELAY = 500;
+
 export function cloneHead(document = window.document) {
   return document.head.innerHTML;
 }
@@ -26,7 +28,7 @@ export function buildHtml(headContent, bodyContent) {
   ].join('\n');
 }
 
-export function saveHtmlFile(fileName, htmlContent, document = window.document) {
+export async function saveHtmlFile(fileName, htmlContent, document = window.document) {
   let link = document.createElement('a');
   if (typeof(Blob) !== undefined) {
     let blob = new Blob([htmlContent], { type: 'text/html' });
@@ -36,11 +38,15 @@ export function saveHtmlFile(fileName, htmlContent, document = window.document) 
   }
   link.setAttribute('download', fileName);
   document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+  try {
+    link.click();
+    await new Promise(resolve => setTimeout(resolve, DOWNLOAD_ASYNC_DELAY));
+  } finally {
+    document.body.removeChild(link);
+  }
 }
 
-export function saveQuine(fileName, document = window.document) {
+export async function saveQuine(fileName, document = window.document) {
   let htmlContent = buildHtml(cloneHead(document), cloneBody(document));
-  return saveHtmlFile(fileName, htmlContent, document);
+  return await saveHtmlFile(fileName, htmlContent, document);
 }

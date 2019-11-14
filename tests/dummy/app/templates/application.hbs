@@ -2,6 +2,52 @@
 
   <MainNav />
 
+  {{#if this.upgrade}}
+    <UpgradeManager />
+  {{else if this.autoUpgradeEnabled}}
+    <AutoUpgrader as |upgrader|>
+
+      {{#if upgrader.isUpadateAvailable}}
+        <AlertBox class="alert_warning" @hideCloseButton={{true}}>
+          <p>
+            There is an upgrade available:
+            <code>{{upgrader.latestVersion}}</code>
+          </p>
+          <p>
+            <button
+              disabled={{upgrader.isDownloading}}
+              {{action upgrader.upgrade}}
+            >
+              Upgrade Now
+            </button>
+          </p>
+        </AlertBox>
+      {{/if}}
+
+      {{#if upgrader.hasUpgraded}}
+        <AlertBox class="alert_success">
+          <p>
+            The downloaded copy has an updated version of the app along with the
+            current data that this one has.
+          </p>
+          <p>
+            You will need to <em>open the downloaded copy</em> or if you have
+            overwritten this one you will need to reload this page.
+          </p>
+          <p>
+            <button {{action "reloadApp"}}>Reload Page</button>
+          </p>
+        </AlertBox>
+      {{else if upgrader.hasError}}
+        <AlertBox class="alert_danger">
+          <p>Something did not work with the upgrade process.</p>
+          <p>{{upgrader.error}}</p>
+        </AlertBox>
+      {{/if}}
+
+    </AutoUpgrader>
+  {{/if}}
+
   {{#if this.showUnsavedAlert}}
     <AlertBox class="alert_warning" @onClose={{action "closeUnsavedAlert"}}>
       Changes are not saved automatically. You must press the <em>save</em>
@@ -9,15 +55,21 @@
     </AlertBox>
   {{/if}}
 
+  {{outlet}}
+
 </div>
 
-{{outlet}}
-
 <footer class="site-footer">
-  <p>Version: {{app-version}}</p>
   <p>
-    <a href="https://github.com/sukima/ember-quine">
-      <img alt="GitHub stars" src="https://img.shields.io/github/stars/sukima/ember-quine?logo=github&style=flat-square">
-    </a>
+    Version: {{app-version}}
+  </p>
+  <p>
+    {{#if this.upgrade}}
+      <strong>Upgrade Mode</strong>
+    {{else}}
+      <a href="https://github.com/sukima/ember-quine">
+        <img alt="GitHub stars" src="https://img.shields.io/github/stars/sukima/ember-quine?logo=github&style=flat-square">
+      </a>
+    {{/if}}
   </p>
 </footer>
