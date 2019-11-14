@@ -12,11 +12,13 @@
   assets inline the HTML.
 </p>
 
-<AlertBox class="alert_info">
-  In order for a downloaded copy of a quine app to work the location type
-  <strong>must be</strong> <CodeInline>hash</CodeInline>. Make this change in
-  your <CodeInline>config/environment.js</CodeInline>.
-  <CodeBlock @language="javascript">ENV.locationType = 'hash';</CodeBlock>
+<AlertBox class="alert_info" @hideCloseButton={{true}}>
+  <p>
+    In order for a downloaded copy of a quine app to work the location type
+    <strong>must be</strong> <CodeInline>hash</CodeInline>. Make this change in
+    your <CodeInline>config/environment.js</CodeInline>.
+    <CodeBlock @language="javascript">ENV.locationType = 'hash';</CodeBlock>
+  </p>
 </AlertBox>
 
 <h3>Quine Service</h3>

@@ -1,9 +1,3 @@
-{{#if this.storeError}}
-  <AlertBox class="alert_danger">
-    {{this.storeError}}
-  </AlertBox>
-{{/if}}
-
 <h2>Data Storage</h2>
 
 <p>
@@ -25,7 +19,27 @@
   though.
 </p>
 
-<h3>Current storage</h3>
+<h3>App Settings</h3>
+
+<p>
+  An example of saving data in a persistent way could be application level
+  settings.
+</p>
+
+<AppSettingsForm />
+
+<h3>Storage Playground</h3>
+
+{{#if this.storeError}}
+  <AlertBox class="alert_danger" @hideCloseButton={{true}}>
+    <p>{{this.storeError}}</p>
+  </AlertBox>
+{{/if}}
+
+<p>
+  This section demonstrates adding and removing ad hoc information that is
+  serialized to the DOM and back. Try adding a new store with some text data.
+</p>
 
 <DocumentStoreManager as |manager|>
 
@@ -45,6 +59,12 @@
   </form>
 
   <h4>Raw HTML</h4>
+
+  <p>
+    This is the current state of the DOM data storage area. You can see it in
+    the Developer Tool's Inspector pane if you wish or trust the rendering of
+    the data here:
+  </p>
 
   {{#if manager.storeHTML}}
     <CodeBlock @code={{manager.storeHTML}} @language="html" />

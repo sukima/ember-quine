@@ -1,0 +1,10 @@
+{{yield (hash
+  currentVersion=this.currentVersion
+  latestVersion=this.quineUpdater.latestVersion
+  isUpadateAvailable=this.quineUpdater.isUpadateAvailable
+  isDownloading=this.loader.isPending
+  hasUpgraded=this.loader.isFulfilled
+  hasError=this.loader.isRejected
+  error=this.loader.reason
+  upgrade=(action "upgrade")
+)}}

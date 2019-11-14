@@ -1,11 +1,18 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
 import config from '../config/environment';
+import { reads } from '@ember/object/computed';
 
 export default Controller.extend({
   quine: service(),
+  settingsStore: service(),
+  queryParams: ['upgrade'],
+
+  upgrade: false,
   showUnsavedAlert: false,
   _canShowUnsavedAlert: true,
+
+  autoUpgradeEnabled: reads('settingsStore.autoUpgradeEnabled'),
 
   init() {
     this._super(...arguments);
@@ -42,6 +49,10 @@ export default Controller.extend({
   actions: {
     closeUnsavedAlert() {
       this.closeUnsavedAlert();
+    },
+
+    reloadApp() {
+      window.location.reload();
     }
   }
 });

@@ -1,0 +1,17 @@
+<div class="data-form" ...attributes>
+  <fieldset>
+    {{#let (concat this.componentId "-auto-upgrade") as |id|}}
+      <label for={{id}}>Auto Upgrade</label>
+      <Input
+        id={{id}}
+        @type="checkbox"
+        @checked={{readonly this.settingsStore.autoUpgradeEnabled}}
+        @change={{action (action "setSetting" "autoUpgradeEnabled") value="target.checked"}}
+      />
+    {{/let}}
+  </fieldset>
+  <p class="hint">
+    Auto Upgrade will query the original app to see if there is a new version and allow
+    you to upgrade the current app on the spot (keeping current data).
+  </p>
+</div>

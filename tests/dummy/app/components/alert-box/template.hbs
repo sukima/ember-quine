@@ -1,10 +1,12 @@
-<div class="alert" ...attributes>
-  <div class="alert--content">
-    {{yield}}
+{{#if this.showAlert}}
+  <div class="alert" ...attributes>
+    <div class="alert--content">
+      {{yield}}
+    </div>
+    {{#unless @hideCloseButton}}
+      <button class="alert--close" title="close alert" {{action "closeAlert"}}>
+        &times;
+      </button>
+    {{/unless}}
   </div>
-  {{#if @onClose}}
-    <button class="alert--close" title="close alert" {{action @onClose}}>
-      &times;
-    </button>
-  {{/if}}
-</div>
+{{/if}}
