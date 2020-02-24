@@ -64,17 +64,23 @@ module.exports = {
 
   included({ env: environment, project }) {
     let buildConfig = require(project.configPath());
-    let { locationType } = buildConfig(environment);
+    let {
+      locationType,
+      'ember-quine': emberQuineConfig = {},
+    } = buildConfig(environment);
+    let { enabled: embedAssetsIntoIndex = true } = emberQuineConfig;
     if (locationType !== 'hash') {
       this.ui.writeWarnLine(oneLine`
         Downloaded versions of the app will NOT WORK without
         locationType = 'hash' in config/environment [ember-quine]
       `);
     }
+    this.embedAssetsIntoIndex = embedAssetsIntoIndex;
     return this._super.included.call(this, ...arguments);
   },
 
   postBuild({ directory }) {
+    if (!this.embedAssetsIntoIndex) { return; }
     let indexFilePath = path.join(directory, 'index.html');
     let doc = cheerio.load(fs.readFileSync(indexFilePath, 'utf-8'));
     doc('style[data-asset-path]').each(inlineReplace(

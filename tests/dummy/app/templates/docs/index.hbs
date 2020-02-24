@@ -10,6 +10,13 @@
   assets inline the HTML.
 </p>
 
+<p>
+  Because this does change the ability for dev tools to source map this can be
+  disabled for development purposes. Add the following to your
+  <CodeInline>config/environment.js</CodeInline>.
+  <CodeBlock @language="javascript">ENV['ember-quine'] = { enabled: false };</CodeBlock>
+</p>
+
 <AlertBox class="alert_info" @hideCloseButton={{true}}>
   <p>
     In order for a downloaded copy of a quine app to work the location type

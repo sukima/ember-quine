@@ -3,7 +3,7 @@ ember-quine
 
 > A quine is a computer program which takes no input and produces a copy of its
 > own source code as its only output.
-> *[Quine (computing) - Wikipedia](https://en.wikipedia.org/wiki/Quine_(computing))*
+> ~ [Quine (computing) - Wikipedia](https://en.wikipedia.org/wiki/Quine_(computing))
 
 Ember Quine is an Ember addon that enables an Ember app to be self downloaded
 as a single HTML file that runs offline (via the `file://` URI).
@@ -27,6 +27,13 @@ Installation
 ember install ember-quine
 ```
 
+By default all JS and CSS assets are compiled into the final `index.html` file.
+To disabled this (for development purposes) add the following to your
+`config/environment.js`:
+
+```js
+ENV['ember-quine'] = { enabled: false };
+```
 
 Usage
 ------------------------------------------------------------------------------
