@@ -1,14 +1,22 @@
+import { DOCUMENT_STORE_AREA_ID } from './document-store';
+
 const DOWNLOAD_ASYNC_DELAY = 500;
 
 export function cloneHead(document = window.document) {
-  return document.head.innerHTML;
+  return [document.head.innerHTML];
+}
+
+export function isQuinableNode(node) {
+  return node.hasAttribute('data-quine')
+    || node.hasAttribute('data-asset-path')
+    || node.getAttribute('id') === DOCUMENT_STORE_AREA_ID;
 }
 
 export function cloneBody(document = window.document) {
-  let content = '';
+  let content = [];
   for (let node of document.body.children) {
-    if (!node.classList.contains('ember-view')) {
-      content += node.outerHTML;
+    if (isQuinableNode(node)) {
+      content.push(node.outerHTML);
     }
   }
   return content;
@@ -19,10 +27,10 @@ export function buildHtml(headContent, bodyContent) {
     '<!DOCTYPE html>',
     '<html>',
     '<head>',
-    headContent,
+    ...headContent,
     '</head>',
     '<body>',
-    bodyContent,
+    ...bodyContent,
     '</body>',
     '</html>'
   ].join('\n');
