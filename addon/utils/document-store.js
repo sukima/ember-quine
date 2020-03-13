@@ -16,7 +16,7 @@ export function createStoreArea(document = window.document) {
   let storeArea = document.createElement('div');
   storeArea.id = DOCUMENT_STORE_AREA_ID;
   storeArea.style.display = 'none';
-  document.body.appendChild(storeArea);
+  document.body.insertBefore(storeArea, document.body.firstChild);
   return storeArea;
 }
 
